@@ -105,7 +105,7 @@ export function Calculator() {
         </Header>
         <Keyboard>
           <AlphaNumerics>
-            <ButtonNum value="AC" onClick={clearInput}/>
+            <ButtonNum value=" " onClick={clearInput}/>
             <ButtonNum value="+/-" onClick={togglePositiveNegative}/>
             <ButtonNum value="%" onClick={percentage}/>
             <ButtonNum value="7" onClick={inputNum}/>
