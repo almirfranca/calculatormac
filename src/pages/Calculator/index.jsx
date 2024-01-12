@@ -36,7 +36,6 @@ export function Calculator() {
     }
   }
 
-
   function percentage() {
     if(num != "" && oldNum != "") {
       setNum((parseFloat(num)  / 100) * parseFloat(oldNum))
@@ -44,7 +43,6 @@ export function Calculator() {
       setNum(parseFloat(num) / 100)
     }
   }
-
 
   function changeSemicolons (e) {
     let virgule = e.target.value
@@ -89,7 +87,7 @@ export function Calculator() {
     }
   }
 
- const buttonsNum = [
+ const renderButtons = [
     {value: "AC", method: clearInput},
     {value: "+/-", method: togglePositiveNegative},
     {value: "%", method: percentage},
@@ -120,7 +118,6 @@ React.useEffect(() => {
  function handleKeyDown (event) {
   const keyPress = event.key
   //console.log("ola")
-
   if (!isNaN(keyPress)) {
     setNum((prevNum) => prevNum + keyPress);
   } else if (keyPress === '+' || keyPress === '-' || keyPress === '*' || keyPress === '/') {
@@ -150,20 +147,9 @@ React.useEffect(() => {
         </Header>
         <Keyboard>
           <AlphaNumerics>
-            <ButtonNum value="AC" onClick={clearInput}/>
-            <ButtonNum value="+/-" onClick={togglePositiveNegative}/>
-            <ButtonNum value="%" onClick={percentage}/>
-            <ButtonNum value="7" onClick={inputNum}/>
-            <ButtonNum value="8" onClick={inputNum}/>
-            <ButtonNum value="9" onClick={inputNum}/>
-            <ButtonNum value="4" onClick={inputNum}/>
-            <ButtonNum value="5" onClick={inputNum}/>
-            <ButtonNum value="6" onClick={inputNum}/>
-            <ButtonNum value="1" onClick={inputNum}/>
-            <ButtonNum value="2" onClick={inputNum}/>
-            <ButtonNum value="3" onClick={inputNum}/>
-            <ButtonZero value="0" onClick={inputNum}/>
-            <ButtonNum value="," onClick={changeSemicolons}/>
+            {renderButtons.map((button, index) => (
+              button.value === "0" ? <ButtonZero key={index} value={button.value} onClick={button.method}/> : <ButtonNum  key={index} value={button.value} onClick={button.method}/>
+            ))};
           </AlphaNumerics>
           <MathematicalOperators>
             <ButtonExp value={<LuDivide/>} onClick={handleOperator}/>
@@ -187,23 +173,6 @@ React.useEffect(() => {
     </Container>
   )
 }
-
-/*
-
-const renderizacao = {
-  value: "AC",
-  function: clearInput
-}
-
-{
-  renderizacao.map((value, function) => {
-    return (
-      <ButtonNum value={value} onClick={function}/>
-    )
-  })
-} 
-
-*/
 
 
 // {value, label(opctional), onClick, type }
