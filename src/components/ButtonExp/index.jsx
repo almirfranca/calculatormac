@@ -1,6 +1,6 @@
 import { Container } from "./styles";
 
-export function ButtonExp({value, onClick, type, ...rest}) {
+export function ButtonExp({value, onClick, label = value, type, ...rest}) {
   return(
     <Container 
       onClick={onClick} 
@@ -8,7 +8,7 @@ export function ButtonExp({value, onClick, type, ...rest}) {
       value={value}
       {...rest}
     >
-      {value}
+      {label}
     </Container>
   )
 }

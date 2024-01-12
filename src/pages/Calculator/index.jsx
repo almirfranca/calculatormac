@@ -71,9 +71,10 @@ export function Calculator() {
   }
 
   function handleClickEqual() {
+    //console.log({num, oldNum, operator})
     const value = parseFloat(num);
     const result = calculate(num, oldNum, operator);
-    setNum(result)
+    setNum(result.toString())
     
     const calculation = `${oldNum} ${operator} ${value} = ${result}`;
     setRegisters([...registers, calculation])
@@ -88,7 +89,51 @@ export function Calculator() {
     }
   }
 
- 
+ const buttonsNum = [
+    {value: "AC", method: clearInput},
+    {value: "+/-", method: togglePositiveNegative},
+    {value: "%", method: percentage},
+    {value: "7", method: inputNum},
+    {value: "8", method: inputNum},
+    {value: "9", method: inputNum},
+    {value: "4", method: inputNum},
+    {value: "5", method: inputNum},
+    {value: "6", method: inputNum},
+    {value: "1", method: inputNum},
+    {value: "2", method: inputNum},
+    {value: "3", method: inputNum},
+    {value: "0", method: inputNum},
+    {value: ",", method: changeSemicolons}
+ ];
+
+
+React.useEffect(() => {
+  //console.log("Entrei aqui")
+  window.addEventListener('keydown', handleKeyDown);
+  return () => {
+    //console.log("desmontando")
+    window.removeEventListener('keydown', handleKeyDown)
+  }
+}, [num, oldNum, operator])
+
+
+ function handleKeyDown (event) {
+  const keyPress = event.key
+  //console.log("ola")
+
+  if (!isNaN(keyPress)) {
+    setNum((prevNum) => prevNum + keyPress);
+  } else if (keyPress === '+' || keyPress === '-' || keyPress === '*' || keyPress === '/') {
+    setOperator(keyPress);
+    setOldNum(num)
+    setNum("")
+  } else if (keyPress === 'Enter') {
+    handleClickEqual();
+  } else if (keyPress === 'Escape') {
+    clearInput();
+  }
+ }
+
   return(
     <Container>
       <App>
@@ -122,7 +167,7 @@ export function Calculator() {
           </AlphaNumerics>
           <MathematicalOperators>
             <ButtonExp value={<LuDivide/>} onClick={handleOperator}/>
-            <ButtonExp value="x" onClick={handleOperator}/>
+            <ButtonExp value="*" label="x" onClick={handleOperator}/>
             <ButtonExp value="-" onClick={handleOperator}/>
             <ButtonExp value="+" onClick={handleOperator}/>
             <ButtonExp value="=" onClick={handleClickEqual}/>
@@ -159,3 +204,6 @@ const renderizacao = {
 } 
 
 */
+
+
+// {value, label(opctional), onClick, type }
